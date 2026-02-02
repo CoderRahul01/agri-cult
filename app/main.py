@@ -6,6 +6,7 @@ from app.schemas.query import QueryRequest, QueryResponse, FeedbackRequest, Feed
 from app.services.graph.workflow import app_graph
 from app.services.retrieval.retriever import PineconeRetriever
 from app.core.config import settings, logger
+from app.api.v1.endpoints.dashboard import router as dashboard_router
 import time
 
 app = FastAPI(
@@ -24,6 +25,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include Routers
+app.include_router(dashboard_router, prefix="/api/v1/dashboard", tags=["Dashboard"])
 
 # Request logging middleware
 @app.middleware("http")
